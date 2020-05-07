@@ -1,0 +1,113 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #222222;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "white"}, "id": "powershell_events", "label": "powershell_events", "shape": "dot", "title": "powershell_events"}, {"font": {"color": "white"}, "id": "datetime", "label": "datetime", "shape": "dot", "title": "datetime"}, {"font": {"color": "white"}, "id": "script_block_id", "label": "script_block_id", "shape": "dot", "title": "script_block_id"}, {"font": {"color": "white"}, "id": "script_block_count", "label": "script_block_count", "shape": "dot", "title": "script_block_count"}, {"font": {"color": "white"}, "id": "script_name", "label": "script_name", "shape": "dot", "title": "script_name"}, {"font": {"color": "white"}, "id": "script_path", "label": "script_path", "shape": "dot", "title": "script_path"}, {"font": {"color": "white"}, "id": "cosine_similarity", "label": "cosine_similarity", "shape": "dot", "title": "cosine_similarity"}, {"font": {"color": "white"}, "id": "time", "label": "time", "shape": "dot", "title": "time"}, {"font": {"color": "white"}, "id": "windows_crashes", "label": "windows_crashes", "shape": "dot", "title": "windows_crashes"}, {"font": {"color": "white"}, "id": "windows_events", "label": "windows_events", "shape": "dot", "title": "windows_events"}]);
+        edges = new vis.DataSet([{"from": "powershell_events", "to": "datetime"}, {"from": "powershell_events", "to": "script_block_id"}, {"from": "powershell_events", "to": "script_block_count"}, {"from": "powershell_events", "to": "script_name"}, {"from": "powershell_events", "to": "script_path"}, {"from": "powershell_events", "to": "cosine_similarity"}, {"from": "datetime", "to": "time"}, {"from": "datetime", "to": "windows_crashes"}, {"from": "datetime", "to": "windows_events"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
